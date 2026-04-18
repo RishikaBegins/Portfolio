@@ -7,10 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+process.env.MONGO_URI =
+  "mongodb://rishikakanaujiya51_db_user:upeMYdZ44os79Adg@ac-oyx60em-shard-00-00.ylenrxf.mongodb.net:27017,ac-oyx60em-shard-00-01.ylenrxf.mongodb.net:27017,ac-oyx60em-shard-00-02.ylenrxf.mongodb.net:27017/portfolio?ssl=true&replicaSet=atlas-115mnt-shard-0&authSource=admin&retryWrites=true&w=majority";
+
 mongoose
-  .connect(
-    "mongodb://rishikakanaujiya51_db_user:upeMYdZ44os79Adg@ac-oyx60em-shard-00-00.ylenrxf.mongodb.net:27017,ac-oyx60em-shard-00-01.ylenrxf.mongodb.net:27017,ac-oyx60em-shard-00-02.ylenrxf.mongodb.net:27017/portfolio?ssl=true&replicaSet=atlas-115mnt-shard-0&authSource=admin&retryWrites=true&w=majority",
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
@@ -48,7 +49,7 @@ app.delete("/projects/:id", async (req, res) => {
   res.json({ message: "Project deleted" });
 });
 
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
