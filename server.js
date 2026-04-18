@@ -24,6 +24,10 @@ const projectSchema = new mongoose.Schema({
 
 const Project = mongoose.model("Project", projectSchema);
 
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully");
+});
+
 app.get("/projects", async (req, res) => {
   const projects = await Project.find();
   res.json(projects);
